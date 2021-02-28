@@ -13,7 +13,7 @@ export class Main {
     this._client = new Client();
 
     configDotenv({
-      path: resolve(resolve(__dirname, "../env/env.variables")),
+      path: resolve(resolve(__dirname, "../.env")),
     });
 
     this._client.login(
