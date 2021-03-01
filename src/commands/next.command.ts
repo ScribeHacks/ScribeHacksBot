@@ -1,4 +1,4 @@
-import { Discord, On, Client, CommandNotFound, Command, CommandMessage, Guard } from "@typeit/discord";
+import { Discord, On, Client, CommandNotFound, Command, CommandMessage, Guard, Description } from "@typeit/discord";
 import { MessageEmbed } from "discord.js";
 import { COLOR } from "../enum/colors.enum";
 import { LINK } from "../enum/links.enum";
@@ -17,6 +17,7 @@ export abstract class Next {
    * Sends the next event happening in the schedule.enum.ts.
    */
   @Command("next")
+  @Description("Sends the next event happening in the schedule.")
   @Guard(NotBot)
   async info(command: CommandMessage): Promise<void> {
     this.logger.info("Sending Next Event");

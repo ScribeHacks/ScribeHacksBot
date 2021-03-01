@@ -1,14 +1,13 @@
-import { Discord, On, Client, CommandNotFound, Command, CommandMessage, Guard } from "@typeit/discord";
+import { Client, Command, CommandMessage, Guard, Description } from "@typeit/discord";
 import { MessageEmbed } from "discord.js";
 import { COLOR } from "../enum/colors.enum";
 import { COMMANDS } from "../enum/commands.enum";
-import { LINK } from "../enum/links.enum";
 import { NotBot } from "../guards/NotABot.guard";
 import { Logger } from "../services/logger.service";
 
 export abstract class Help {
 
-    logger = Logger.prototype.getInstance();
+  logger = Logger.prototype.getInstance();
 
   /**
    * @name Help
@@ -18,22 +17,24 @@ export abstract class Help {
    * A simple help command that will provide help for other commands.
    */
   @Command("help")
+  @Description("A simple help command that will provide help for other commands.")
   @Guard(NotBot)
   async info(command: CommandMessage): Promise<void> {
     this.logger.info("Sending Help");
-    console.log(COMMANDS);
 
-    const embed = new MessageEmbed();
-    embed
-      .setTitle(`ScribeHacks Help`)
-      .setDescription(
-        `Hello I am the ScribeHacks Support Bot, what may I assist you with? \n \n Use \`!help [command]\` to get more information about a specific command. \n \n Our current commands are: \n ${Object.keys(COMMANDS)}`
-      )
-      .setColor(COLOR.GREEN)
-      .setThumbnail(LINK.LOGO)
-      .setFooter("Powered by Discord.TS!");
+    const helpMsg = new MessageEmbed({
+      type: 'rich',
+      title: 'ScribeHacks Help',
+      description: `Hello I am the ScribeHacks Support Bot, what may I assist you with?`,
+      color: COLOR.GREEN,
+    });
 
-    command.reply({ embed }).then((messageSent) => {
+    // For loop to count how many commands there are and add a field to helpMsg
+    for (const [key, value] of Object.entries(COMMANDS)) {
+      helpMsg.addField(key, value, false);
+    }
+
+    command.reply(helpMsg).then((messageSent) => {
       this.logger.info(`Sent Info : message id ${messageSent.id}`);
     });
   }
