@@ -20,7 +20,7 @@ export abstract class MemberEvents {
     );
     const guild = member.guild;
 
-    guild.systemChannel.send(`Hello ${member}! Welcome to the **ScribeHacks** Discord!`)
+    guild.systemChannel.send(`Hello ${member}! Welcome to the **Hackathon** Discord!`)
 
     guild.roles.fetch(ID.MEMBER_ID).then((role: Role) => {
       member.roles
