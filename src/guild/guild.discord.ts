@@ -1,7 +1,7 @@
 import { Description, On, ArgsOf } from "@typeit/discord";
 import { ID } from "../enum/id.enum";
 
-import { Logger } from "../logger/logger.service";
+import { Logger } from "../services/logger.service";
 
 @Description("Discord Guild Event Handlers")
 export abstract class GuildEvents {

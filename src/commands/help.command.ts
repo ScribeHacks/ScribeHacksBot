@@ -1,33 +1,35 @@
 import { Discord, On, Client, CommandNotFound, Command, CommandMessage, Guard } from "@typeit/discord";
 import { MessageEmbed } from "discord.js";
 import { COLOR } from "../enum/colors.enum";
+import { COMMANDS } from "../enum/commands.enum";
 import { LINK } from "../enum/links.enum";
 import { NotBot } from "../guards/NotABot.guard";
 import { Logger } from "../services/logger.service";
 
-export abstract class Info {
+export abstract class Help {
 
     logger = Logger.prototype.getInstance();
 
   /**
-   * @name info
+   * @name Help
    * @param command
    * object is command message from the author.
    * @description
-   * Sends information about the hackathon to the author.
+   * A simple help command that will provide help for other commands.
    */
-  @Command("info")
+  @Command("help")
   @Guard(NotBot)
   async info(command: CommandMessage): Promise<void> {
-    this.logger.info("Sending Info");
+    this.logger.info("Sending Help");
+    console.log(COMMANDS);
 
     const embed = new MessageEmbed();
     embed
-      .setTitle(`ScribeHacks Info`)
+      .setTitle(`ScribeHacks Help`)
       .setDescription(
-        `Here is the link to the Site for [ScribeHacks](${LINK.SITE}).\nPlease check the [GitHub Repo for me also!](${LINK.REPO})\n`
+        `Hello I am the ScribeHacks Support Bot, what may I assist you with? \n \n Use \`!help [command]\` to get more information about a specific command. \n \n Our current commands are: \n ${Object.keys(COMMANDS)}`
       )
-      .setColor(COLOR.BLUE)
+      .setColor(COLOR.GREEN)
       .setThumbnail(LINK.LOGO)
       .setFooter("Powered by Discord.TS!");
 

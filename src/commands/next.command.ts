@@ -5,21 +5,21 @@ import { LINK } from "../enum/links.enum";
 import { NotBot } from "../guards/NotABot.guard";
 import { Logger } from "../services/logger.service";
 
-export abstract class Info {
+export abstract class Next {
 
     logger = Logger.prototype.getInstance();
 
   /**
-   * @name info
+   * @name next
    * @param command
    * object is command message from the author.
    * @description
-   * Sends information about the hackathon to the author.
+   * Sends the next event happening in the schedule.enum.ts.
    */
-  @Command("info")
+  @Command("next")
   @Guard(NotBot)
   async info(command: CommandMessage): Promise<void> {
-    this.logger.info("Sending Info");
+    this.logger.info("Sending Next Event");
 
     const embed = new MessageEmbed();
     embed

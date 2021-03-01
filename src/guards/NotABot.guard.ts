@@ -1,5 +1,5 @@
 import { GuardFunction } from "@typeit/discord";
-import { Logger } from "../logger/logger.service";
+import { Logger } from "../services/logger.service";
 
 export const NotBot: GuardFunction<"message"> = async (
   [message],
