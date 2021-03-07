@@ -1,4 +1,4 @@
-import { Client, Command, CommandMessage, Guard, Description } from "@typeit/discord";
+import { Command, CommandMessage, Guard, Description } from "@typeit/discord";
 import { MessageEmbed } from "discord.js";
 import { COLOR } from "../enum/colors.enum";
 import { COMMANDS } from "../enum/commands.enum";
