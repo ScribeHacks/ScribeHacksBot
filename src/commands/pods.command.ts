@@ -62,4 +62,30 @@ export abstract class Pods {
         })
         this.logger.info("Removed: " + rolesToBeDeleted.toString());
     }
+
+    @Command("createPod")
+    @Description("Makes a pod for the current user's team")
+    @Guard(NotBot)
+    async createPod(command: CommandMessage): Promise<void> {
+
+        command.guild.channels.create('Podme', {
+            type: 'category',
+            position: 1,
+            permissionOverwrites: [
+                {
+                    id: command.guild.id,
+                    allow: ['VIEW_CHANNEL'],
+                }]
+        }).then(cat => {
+            command.guild.channels.create('Pod-Testing', {
+                type: 'text',
+                parent: cat,
+                permissionOverwrites: [
+                    {
+                        id: command.guild.id,
+                        allow: ['VIEW_CHANNEL'],
+                    }]
+            })
+        }
+    }
 }
