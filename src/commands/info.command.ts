@@ -24,9 +24,9 @@ export abstract class Info {
 
     const embed = new MessageEmbed();
     embed
-      .setTitle(`ScribeHacks Info`)
+      .setTitle(`Hackathon Info`)
       .setDescription(
-        `Here is the link to the Site for [ScribeHacks](${LINK.SITE}).\nPlease check the [GitHub Repo for me also!](${LINK.REPO})\n`
+        `Here is the link to the Site for [Hackathon](${LINK.SITE}).\nPlease check the [GitHub Repo for me also!](${LINK.REPO})\n`
       )
       .setColor(COLOR.BLUE)
       .setThumbnail(LINK.LOGO)
