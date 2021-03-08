@@ -21,6 +21,9 @@ export class Main {
       `${__dirname}/*.ts`,
       `${__dirname}/*.js`
     );
+    this._client.on("ready", () => {
+      this._client.user.setPresence({ activity: { name: 'Moderating ScribeHacks' }, status: 'online' })
+    })
   }
 }
 

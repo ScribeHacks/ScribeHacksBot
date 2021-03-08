@@ -1,5 +1,5 @@
 import { Discord, Description, On, ArgsOf } from "@typeit/discord";
-import { Logger } from "./logger/logger.service";
+import { Logger } from "./services/logger.service";
 import * as chalk from "chalk";
 import * as Path from "path";
 

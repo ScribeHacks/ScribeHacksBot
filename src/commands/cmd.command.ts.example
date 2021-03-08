@@ -1,0 +1,26 @@
+import { Discord, On, Client, CommandNotFound, Command, CommandMessage, Guard, Description } from "@typeit/discord";
+import { NotBot } from "../guards/NotABot.guard";
+import { Logger } from "../services/logger.service";
+
+export abstract class Example {
+
+    logger = Logger.prototype.getInstance();
+
+    /**
+     * @name Example
+     * @param command
+     * object is command message from the author.
+     * @description
+     * Example file. When adding a new command duplicate this file and change the class name, the @Command value, the @Description value,the async function name and also the logging information.
+     */
+    @Command("info")
+    @Description("Sends information about the hackathon to the author")
+    @Guard(NotBot)
+    async pods(command: CommandMessage): Promise<void> {
+        this.logger.info("Sending Pods");
+
+        command.reply({ embed }).then((messageSent) => {
+            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+        });
+    }
+}
