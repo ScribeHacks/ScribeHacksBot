@@ -8,21 +8,21 @@ interface randomWordArgs {
     randomWords: number;
 }
 
-export abstract class Pods {
+export abstract class Teams {
 
     logger = Logger.prototype.getInstance();
 
     /**
-     * @name pods
+     * @name Teams
      * @param command
      * object is command message from the author.
      * @description
-     * Creates "pods" channels for every team and assigns a mentor to the channel.
+     * Creates "teams" channels for every team and assigns a mentor to the channel.
      */
-    @Command("podsAdd :randomWords")
-    @Description("Creates pods channels for every team and assigns a mentor to the channel")
+    @Command("teamsAdd :randomWords")
+    @Description("Creates teams channels for every team and assigns a mentor to the channel")
     @Guard(NotBot, Admin)
-    async podsAdd(command: CommandMessage<randomWordArgs>): Promise<void> {
+    async teamsAdd(command: CommandMessage<randomWordArgs>): Promise<void> {
 
         const { randomWords } = command.args;
 
@@ -38,7 +38,7 @@ export abstract class Pods {
                         name: "Team: " + word,
                         color: 'BLUE',
                     },
-                    reason: 'Added a new pod role',
+                    reason: 'Added a new team role',
                 })
             })
         }
@@ -48,10 +48,10 @@ export abstract class Pods {
         });
     }
 
-    @Command("podsRemove")
-    @Description("Creates pods channels for every team and assigns a mentor to the channel")
+    @Command("teamsRemove")
+    @Description("Creates teams channels for every team and assigns a mentor to the channel")
     @Guard(NotBot, Admin)
-    async podsRemove(command: CommandMessage): Promise<void> {
+    async teamsRemove(command: CommandMessage): Promise<void> {
         const allRoles = command.guild.roles.cache;
         const rolesToBeDeleted = Array<string>();
         allRoles.forEach(role => {
@@ -63,29 +63,15 @@ export abstract class Pods {
         this.logger.info("Removed: " + rolesToBeDeleted.toString());
     }
 
-    @Command("createPod")
-    @Description("Makes a pod for the current user's team")
+    @Command("createTeam")
+    @Description("Makes a team for the current user's team")
     @Guard(NotBot)
-    async createPod(command: CommandMessage): Promise<void> {
-
-        command.guild.channels.create('Podme', {
-            type: 'category',
-            position: 1,
-            permissionOverwrites: [
-                {
-                    id: command.guild.id,
-                    allow: ['VIEW_CHANNEL'],
-                }]
-        }).then(cat => {
-            command.guild.channels.create('Pod-Testing', {
-                type: 'text',
-                parent: cat,
-                permissionOverwrites: [
-                    {
-                        id: command.guild.id,
-                        allow: ['VIEW_CHANNEL'],
-                    }]
-            })
+    async createTeam(command: CommandMessage): Promise<void> {
+        if (!command.guild.channels.cache.find(c => c.name === "Category" && c.type === 'category')) {
+            command.guild.channels.create('CATEGORY', { type: 'category' }).then(cat => {
+                command.guild.channels.create('Channel', { type: 'text', parent: cat.id });
+                command.guild.channels.create('Voice', { type: 'voice', parent: cat.id });
+            });
         }
     }
 }
