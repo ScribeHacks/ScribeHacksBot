@@ -30,8 +30,10 @@ export abstract class Schedule {
         });
 
         Events.forEach(function (event) {
-            const eventTime = formatDate(event.time);
-            eventMsg.addField(event.name, eventTime, false)
+            if (event.time >= new Date()) {
+                const eventTime = formatDate(event.time);
+                eventMsg.addField(event.name, eventTime, false)
+            }
         })
 
         function formatDate(date) {

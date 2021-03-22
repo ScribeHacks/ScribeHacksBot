@@ -5,7 +5,6 @@ import { LINK } from "../enum/links.enum";
 import { NotBot } from "../guards/NotABot.guard";
 import { Events } from "../interfaces/schedule.interface";
 import { Logger } from "../services/logger.service";
-import * as moment from "moment";
 
 export abstract class Next {
 

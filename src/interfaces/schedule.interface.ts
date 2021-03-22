@@ -10,7 +10,7 @@ interface Event {
 const CheckIn = {
     name: "Doors Open, Check In",
     timeStamp: new Date("2021-09-18T08:00:00-07:00"),
-    time: new Date("September 18, 2019 08:00:00"),
+    time: new Date("September 18, 2021 08:00:00"),
     day: 0,
     happened: false
 }
