@@ -4,9 +4,8 @@ import { Logger } from "../services/logger.service";
 import { Events } from "../interfaces/schedule.interface"
 import { MessageEmbed } from "discord.js";
 import { COLOR } from "../enum/colors.enum";
-
+import { AirtablePlusPlus } from "airtable-plusplus"
 export abstract class Schedule {
-
     logger = Logger.prototype.getInstance();
 
     /**
@@ -20,6 +19,11 @@ export abstract class Schedule {
     @Description("Sends information about the hackathon to the author")
     @Guard(NotBot)
     async Schedule(command: CommandMessage): Promise<void> {
+        const table = new AirtablePlusPlus({
+            baseID: process.env.AIRTABLE_BASE_ID,
+            tableName: 'Schedule',
+            apiKey: process.env.AIRTABLE_API_KEY
+        });
         this.logger.info("Sending Schedule");
 
         const eventMsg = new MessageEmbed({
@@ -29,11 +33,15 @@ export abstract class Schedule {
             color: COLOR.ORANGE,
         });
 
-        Events.forEach(function (event) {
-            if (event.time >= new Date()) {
-                const eventTime = formatDate(event.time);
-                eventMsg.addField(event.name, eventTime, false)
-            }
+        const events = await table.read();
+
+        events.forEach(function (event) {
+            this.logger.info(event.fields)
+            // const date = Date.parse(event.fields.Time);
+            // if (event.fields.Time >= new Date()) {
+            const eventTime = formatDate(event.fields.Time);
+            eventMsg.addField(event.fields.Name, "hello", false)
+            // }
         })
 
         function formatDate(date) {
@@ -53,7 +61,10 @@ export abstract class Schedule {
 
 
         command.reply(eventMsg).then((messageSent) => {
-            this.logger.info(`Sent Schedule : message id ${messageSent.id}`);
+            events.forEach(function (event) {
+            this.logger.info("Test1");
+            this.logger.info(event.fields);
+            })
         });
     }
 }
