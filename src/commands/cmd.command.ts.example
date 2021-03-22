@@ -13,11 +13,11 @@ export abstract class Example {
      * @description
      * Example file. When adding a new command duplicate this file and change the class name, the @Command value, the @Description value,the async function name and also the logging information.
      */
-    @Command("info")
+    @Command("Example")
     @Description("Sends information about the hackathon to the author")
     @Guard(NotBot)
-    async pods(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending Pods");
+    async Example(command: CommandMessage): Promise<void> {
+        this.logger.info("Sending Example");
 
         command.reply({ embed }).then((messageSent) => {
             this.logger.info(`Sent Info : message id ${messageSent.id}`);
