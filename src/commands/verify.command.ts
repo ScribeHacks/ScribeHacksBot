@@ -12,15 +12,8 @@ export abstract class Verify {
 
     logger = Logger.prototype.getInstance();
 
-    /**
-     * @name Verify
-     * @param command
-     * object is command message from the author.
-     * @description
-     * Example file. When adding a new command duplicate this file and change the class name, the @Command value, the @Description value,the async function name and also the logging information.
-     */
     @Command("verify :verifyArgsString")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Verifies the user if the type !verify HackathonName")
     @Guard(NotBot)
     async verify(command: CommandMessage<verifyIn>): Promise<void> {
         const { verifyArgsString } = command.args;
