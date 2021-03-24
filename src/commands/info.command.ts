@@ -1,21 +1,15 @@
-import { Discord, On, Client, CommandNotFound, Command, CommandMessage, Guard, Description } from "@typeit/discord";
+import { Command, CommandMessage, Guard, Description } from "@typeit/discord";
 import { MessageEmbed } from "discord.js";
 import { COLOR } from "../enum/colors.enum";
-import { LINK } from "../enum/links.enum";
+import { LINKS } from "../enum/links.enum";
 import { NotBot } from "../guards/NotABot.guard";
 import { Logger } from "../services/logger.service";
+import { HACKATHON } from "../enum/hackathon.enum"
 
 export abstract class Info {
 
-    logger = Logger.prototype.getInstance();
+  logger = Logger.prototype.getInstance();
 
-  /**
-   * @name info
-   * @param command
-   * object is command message from the author.
-   * @description
-   * Sends information about the hackathon to the author.
-   */
   @Command("info")
   @Description("Sends information about the hackathon to the author")
   @Guard(NotBot)
@@ -26,13 +20,23 @@ export abstract class Info {
     embed
       .setTitle(`Hackathon Info`)
       .setDescription(
-        `Here is the link to the Site for [Hackathon](${LINK.SITE}).\nPlease check the [GitHub Repo for me also!](${LINK.REPO})\n`
+        `Here is the link to the Site for [${HACKATHON.Name}](${LINKS.SITE}).\nPlease check the [GitHub Repo for me also!](${LINKS.REPO})\n`
       )
       .setColor(COLOR.BLUE)
-      .setThumbnail(LINK.LOGO)
+      .setThumbnail(LINKS.LOGO)
       .setFooter("Powered by Discord.TS!");
 
     command.reply({ embed }).then((messageSent) => {
+      this.logger.info(`Sent Info : message id ${messageSent.id}`);
+    });
+  }
+
+  @Command("signup")
+  @Guard(NotBot)
+  async signup(command: CommandMessage): Promise<void> {
+    this.logger.info("Sending Signup");
+
+    command.reply("Please signup here! " + LINKS.SIGNUP).then((messageSent) => {
       this.logger.info(`Sent Info : message id ${messageSent.id}`);
     });
   }

@@ -1,4 +1,4 @@
-import { Discord, On, Client, CommandNotFound, Command, CommandMessage, Guard, Description } from "@typeit/discord";
+import { Command, CommandMessage, Guard, Description } from "@typeit/discord";
 import { NotBot } from "../guards/NotABot.guard";
 import { Logger } from "../services/logger.service";
 import { ID } from "../enum/id.enum";
