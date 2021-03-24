@@ -1,0 +1,76 @@
+import { Command, CommandMessage, Guard, Description } from "@typeit/discord";
+import { NotBot } from "../guards/NotABot.guard";
+import { Logger } from "../services/logger.service";
+import { Roles, Emoji } from "../enum/roles.enum"
+import { Admin } from "../guards/Admin.guard";
+import { COLOR } from "../enum/colors.enum";
+import { MessageEmbed } from "discord.js";
+
+export abstract class RolesCommands {
+
+    logger = Logger.prototype.getInstance();
+
+    /**
+     * @name makeRoles
+     * @param command
+     * object is command message from the author.
+     * @description
+     * Example file. When adding a new command duplicate this file and change the class name, the @Command value, the @Description value,the async function name and also the logging information.
+     */
+    @Command("makeRoles")
+    @Description("Makes the roles for the reaction roles.")
+    @Guard(NotBot, Admin)
+    async makeRoles(command: CommandMessage): Promise<void> {
+        this.logger.info("Sending Roles");
+
+        // Getting the role by ID.
+        const Role1 = command.guild.roles.cache.get("RoleID");
+
+        const rolesMsg = new MessageEmbed({
+            type: 'rich',
+            title: 'ScribeHacks Roles',
+            description: `Hey! Please pick a role!`,
+            color: COLOR.SEAGREEN,
+        });
+
+        for (const [key, value] of Object.entries(Emoji)) {
+            const emojiToBeAdded = "<:" + key + ":" + value + ">";
+            const emojiName = key + "=";
+            rolesMsg.addField(emojiName, emojiToBeAdded, false);
+            await rolesMsg.react(emojiToBeAdded);
+        }
+
+        // Reacting to the embed message.
+
+        // Awaiting a reaction to the embed message. Time is measured in ms. (30000 ms - 30 seconds)
+        rolesMsg.awaitReactions(Filter, { max: 1, time: 30000, errors: ["time"] }).then(async collected => {
+            // Getting the first reaction in the collection.
+            const reaction = collected.first();
+
+            // Creating a switch statement for reaction.emoji.name.
+            switch (reaction.emoji.name) {
+                case "😎":
+                    // Checking if the member already has the role.
+                    if (command.member.roles.cache.has(Role1.id)) {
+                        const userReactions = command.reactions.cache.filter(reaction => reaction.users.cache.has(command.member.id));
+                        try {
+                            for (const reaction of userReactions.values()) {
+                                await reaction.users.remove(command.member.id);
+                            }
+                        } catch (error) {
+                            console.error('Failed to remove reactions.');
+                        }
+
+                     }
+                    // Adding the role.
+                    command.member.roles.add(Role1).then(command.channel.send("Role added!"));
+                    // Breaking the switch statement to make sure no other cases are executed.
+                    break
+            }
+        })
+
+        command.channel.send( rolesMsg ).then((messageSent) => {
+            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+        });
+    }
+}
