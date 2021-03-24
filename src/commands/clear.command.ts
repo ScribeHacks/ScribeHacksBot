@@ -11,13 +11,6 @@ export abstract class Clear {
 
     logger = Logger.prototype.getInstance();
 
-    /**
-     * @name Clear
-     * @param command
-     * object is command message from the author.
-     * @description
-     * Clears from 1-99 messages based on which number is provided.
-     */
     @Command("clear :amount")
     @Description("Clears from 1-99 messages based on which number is provided")
     @Guard(NotBot, Admin)

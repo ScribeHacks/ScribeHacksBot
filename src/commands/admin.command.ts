@@ -1,17 +1,17 @@
 import { Command, CommandMessage, Guard, Description } from "@typeit/discord";
 import { NotBot } from "../guards/NotABot.guard";
 import { Logger } from "../services/logger.service";
-import NekoClient = require("nekos.life");
 import { Admin } from "../guards/Admin.guard";
 import { HACKATHON } from "../enum/hackathon.enum";
+import { Mention } from "../guards/Mention.guard";
 
-export abstract class Fun {
+export abstract class Admins {
 
     logger = Logger.prototype.getInstance();
 
     @Command("ban")
     @Description("Sends information about the hackathon to the author")
-    @Guard(NotBot, Admin)
+    @Guard(NotBot, Admin, Mention)
     async ban(command: CommandMessage): Promise<void> {
         this.logger.info("Sending ban");
 
@@ -25,7 +25,7 @@ export abstract class Fun {
     }
 
     @Command("kick")
-    @Guard(NotBot, Admin)
+    @Guard(NotBot, Admin, Mention)
     async kick(command: CommandMessage): Promise<void> {
         this.logger.info("Sending kick");
 

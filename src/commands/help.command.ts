@@ -10,13 +10,6 @@ export abstract class Help {
 
   logger = Logger.prototype.getInstance();
 
-  /**
-   * @name Help
-   * @param command
-   * object is command message from the author.
-   * @description
-   * A simple help command that will provide help for other commands.
-   */
   @Command("help")
   @Description("A simple help command that will provide help for other commands.")
   @Guard(NotBot)
@@ -36,7 +29,7 @@ export abstract class Help {
     }
 
     command.reply(helpMsg).then((messageSent) => {
-      this.logger.info(`Sent Info : message id ${messageSent.id}`);
+      this.logger.info(`Sent help : message id ${messageSent.id}`);
     });
   }
 
@@ -59,7 +52,7 @@ export abstract class Help {
     }
 
     command.reply(helpMsg).then((messageSent) => {
-      this.logger.info(`Sent Info : message id ${messageSent.id}`);
+      this.logger.info(`Sent admin help : message id ${messageSent.id}`);
     });
   }
 }

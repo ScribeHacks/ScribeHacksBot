@@ -32,12 +32,13 @@ export abstract class Info {
   }
 
   @Command("signup")
+  @Description("Get the link to signup for the Hackathon")
   @Guard(NotBot)
   async signup(command: CommandMessage): Promise<void> {
     this.logger.info("Sending Signup");
 
     command.reply("Please signup here! " + LINKS.SIGNUP).then((messageSent) => {
-      this.logger.info(`Sent Info : message id ${messageSent.id}`);
+      this.logger.info(`Sent Signup : message id ${messageSent.id}`);
     });
   }
 }

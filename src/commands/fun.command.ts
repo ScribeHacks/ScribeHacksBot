@@ -13,7 +13,7 @@ export abstract class Fun {
     api = "https://purrbot.site/api";
 
     @Command("kiss")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Sends a kiss to another user. Must @ another user.")
     @Guard(NotBot, Mention)
     async kiss(command: CommandMessage): Promise<void> {
         this.logger.info("Sending kiss");
@@ -32,12 +32,12 @@ export abstract class Fun {
             .setFooter("You both look cute");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent a kiss : message id ${messageSent.id}`);
         });
     }
 
     @Command("smug")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Be smug")
     @Guard(NotBot)
     async smug(command: CommandMessage): Promise<void> {
         this.logger.info("Sending smug");
@@ -53,12 +53,12 @@ export abstract class Fun {
             .setFooter("You look smug");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent smug : message id ${messageSent.id}`);
         });
     }
 
     @Command("baka")
-    @Description("Sends information about the hackathon to the author")
+    @Description("You are a baka")
     @Guard(NotBot)
     async baka(command: CommandMessage): Promise<void> {
         this.logger.info("Sending baka");
@@ -74,12 +74,12 @@ export abstract class Fun {
             .setFooter("You look baka");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent baka : message id ${messageSent.id}`);
         });
     }
 
     @Command("pat")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Pat another user. Must @ another user")
     @Guard(NotBot, Mention)
     async pat(command: CommandMessage): Promise<void> {
         this.logger.info("Sending pat");
@@ -99,12 +99,12 @@ export abstract class Fun {
             .setFooter("You did a good pat!");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent pat : message id ${messageSent.id}`);
         });
     }
 
     @Command("hug")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Hug another user. Must @ another user")
     @Guard(NotBot, Mention)
     async hug(command: CommandMessage): Promise<void> {
         this.logger.info("Sending hug");
@@ -124,12 +124,12 @@ export abstract class Fun {
             .setFooter("You gave a massive hug!");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent hug : message id ${messageSent.id}`);
         });
     }
 
     @Command("slap")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Slap another user. Must @ another user")
     @Guard(NotBot, Mention)
     async slap(command: CommandMessage): Promise<void> {
         this.logger.info("Sending slap");
@@ -149,12 +149,12 @@ export abstract class Fun {
             .setFooter("You slapped them hard!");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent slap : message id ${messageSent.id}`);
         });
     }
 
     @Command("tickle")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Tickle another user. Must @ another user")
     @Guard(NotBot, Mention)
     async tickle(command: CommandMessage): Promise<void> {
         this.logger.info("Sending slap");
@@ -174,15 +174,15 @@ export abstract class Fun {
             .setFooter("You tickled them hard!");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent tickle : message id ${messageSent.id}`);
         });
     }
 
     @Command("cuddle")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Cuddle another user. Must @ another user")
     @Guard(NotBot, Mention)
     async cuddle(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending slap");
+        this.logger.info("Sending cuddle");
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
@@ -199,11 +199,11 @@ export abstract class Fun {
             .setFooter("You cuddled them hard!");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent cuddle : message id ${messageSent.id}`);
         });
     }
     @Command("poke")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Poke another user. Must @ another user")
     @Guard(NotBot, Mention)
     async poke(command: CommandMessage): Promise<void> {
         this.logger.info("Sending poke");
@@ -223,12 +223,12 @@ export abstract class Fun {
             .setFooter("You poked them hard!");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent poke : message id ${messageSent.id}`);
         });
     }
 
     @Command("feed")
-    @Description("Sends information about the hackathon to the author")
+    @Description("Feed another user. Must @ another user")
     @Guard(NotBot, Mention)
     async feed(command: CommandMessage): Promise<void> {
         this.logger.info("Sending feed");
@@ -248,11 +248,12 @@ export abstract class Fun {
             .setFooter("You fed them good food!");
 
         command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent Info : message id ${messageSent.id}`);
+            this.logger.info(`Sent feed : message id ${messageSent.id}`);
         });
     }
 
     @Command("ping")
+    @Description("Get latency of the bot")
     @Guard(NotBot)
     async ping(command: CommandMessage): Promise<void> {
         this.logger.info("Sending feed");
@@ -263,15 +264,19 @@ export abstract class Fun {
     }
 
     @Command("dice")
+    @Description("Roll a dice")
     @Guard(NotBot)
     async dice(command: CommandMessage): Promise<void> {
         this.logger.info("Sending dice");
         const diceRoll = Math.floor(Math.random() * 6) + 1;
 
-        command.reply("You rolled a " + diceRoll);
+        command.reply("You rolled a " + diceRoll).then((messageSent) => {
+            this.logger.info(`Sent dice : message id ${messageSent.id}`);
+        });
     }
 
     @Command("magic8")
+    @Description("Get what the magic 8 ball says")
     @Guard(NotBot)
     async magic8(command: CommandMessage): Promise<void> {
         this.logger.info("Sending magic8");
@@ -281,10 +286,13 @@ export abstract class Fun {
         const random = Math.floor(Math.random() * options.length);
 
 
-        command.reply("The magic8 ball says " + options[random]);
+        command.reply("The magic8 ball says " + options[random]).then((messageSent) => {
+            this.logger.info(`Sent magic8 : message id ${messageSent.id}`);
+        });
     }
 
     @Command("kill")
+    @Description("Kill another user. Uh Oh")
     @Guard(NotBot, Mention)
     async kill(command: CommandMessage): Promise<void> {
         this.logger.info("Sending kill");
@@ -303,6 +311,8 @@ export abstract class Fun {
             .setTitle(`${author} was ${options[random]} by ${user}`)
             .setFooter("K-O!");
 
-        command.reply({ embed });
+        command.reply({ embed }).then((messageSent) => {
+            this.logger.info(`Sent kill : message id ${messageSent.id}`);
+        });
     }
 }
