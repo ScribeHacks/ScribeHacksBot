@@ -267,7 +267,7 @@ export abstract class Fun {
             .setImage(feed)
             .setFooter("You fed them good food!");
 
-        if (user === undefined) { return; }
+        if (user === "error") { return; }
         else {
 
             command.reply(embed).then((messageSent) => {
