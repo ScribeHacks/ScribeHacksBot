@@ -10,13 +10,6 @@ export abstract class RolesCommands {
 
     logger = Logger.prototype.getInstance();
 
-    /**
-     * @name makeRoles
-     * @param command
-     * object is command message from the author.
-     * @description
-     * Example file. When adding a new command duplicate this file and change the class name, the @Command value, the @Description value,the async function name and also the logging information.
-     */
     @Command("makeRoles")
     @Description("Makes the roles for the reaction roles.")
     @Guard(NotBot, Admin)
