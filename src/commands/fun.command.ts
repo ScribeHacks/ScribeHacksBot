@@ -6,34 +6,44 @@ import { COLOR } from "../enum/colors.enum";
 import { MessageEmbed } from "discord.js";
 import { Mention } from "../guards/Mention.guard";
 
+function getMentioned(command: CommandMessage) {
+    try {
+        const mentioned = command.mentions.users.first();
+        const guildMentioned = command.guild.member(mentioned);
+        return guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+    } catch (error) {
+        Logger.prototype.error("Undefined user");
+        return "error";
+    }
+}
 export abstract class Fun {
 
     logger = Logger.prototype.getInstance();
     neko = new NekoClient();
     api = "https://purrbot.site/api";
-
     @Command("kiss")
     @Description("Sends a kiss to another user. Must @ another user.")
-    @Guard(NotBot, Mention)
+    @Guard(NotBot)
     async kiss(command: CommandMessage): Promise<void> {
         this.logger.info("Sending kiss");
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const kisses = await (await this.neko.sfw.kiss()).url;
-
         const embed = new MessageEmbed()
             .setColor(COLOR.RANDOM)
             .setTitle(`${author} kisses ${user}`)
             .setImage(kisses)
             .setFooter("You both look cute");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent a kiss : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent a kiss : message id ${messageSent.id}`);
+            });
+        }
     }
 
     @Command("smug")
@@ -86,9 +96,7 @@ export abstract class Fun {
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const pat = await (await this.neko.sfw.pat()).url;
 
@@ -98,9 +106,13 @@ export abstract class Fun {
             .setImage(pat)
             .setFooter("You did a good pat!");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent pat : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent pat : message id ${messageSent.id}`);
+            });
+        }
     }
 
     @Command("hug")
@@ -111,9 +123,7 @@ export abstract class Fun {
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const hug = await (await this.neko.sfw.hug()).url;
 
@@ -123,9 +133,13 @@ export abstract class Fun {
             .setImage(hug)
             .setFooter("You gave a massive hug!");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent hug : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent a hug : message id ${messageSent.id}`);
+            });
+        }
     }
 
     @Command("slap")
@@ -136,9 +150,7 @@ export abstract class Fun {
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const slap = await (await this.neko.sfw.slap()).url;
 
@@ -148,9 +160,13 @@ export abstract class Fun {
             .setImage(slap)
             .setFooter("You slapped them hard!");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent slap : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent a slap : message id ${messageSent.id}`);
+            });
+        }
     }
 
     @Command("tickle")
@@ -161,9 +177,7 @@ export abstract class Fun {
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const tickle = await (await this.neko.sfw.tickle()).url;
 
@@ -173,9 +187,13 @@ export abstract class Fun {
             .setImage(tickle)
             .setFooter("You tickled them hard!");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent tickle : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent a tickle : message id ${messageSent.id}`);
+            });
+        }
     }
 
     @Command("cuddle")
@@ -186,9 +204,7 @@ export abstract class Fun {
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const cuddle = await (await this.neko.sfw.cuddle()).url;
 
@@ -198,9 +214,13 @@ export abstract class Fun {
             .setImage(cuddle)
             .setFooter("You cuddled them hard!");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent cuddle : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent a cuddle : message id ${messageSent.id}`);
+            });
+        }
     }
     @Command("poke")
     @Description("Poke another user. Must @ another user")
@@ -210,9 +230,7 @@ export abstract class Fun {
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const poke = await (await this.neko.sfw.poke()).url;
 
@@ -222,9 +240,13 @@ export abstract class Fun {
             .setImage(poke)
             .setFooter("You poked them hard!");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent poke : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent a poke : message id ${messageSent.id}`);
+            });
+        }
     }
 
     @Command("feed")
@@ -235,9 +257,7 @@ export abstract class Fun {
 
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const feed = await (await this.neko.sfw.feed()).url;
 
@@ -247,9 +267,13 @@ export abstract class Fun {
             .setImage(feed)
             .setFooter("You fed them good food!");
 
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent feed : message id ${messageSent.id}`);
-        });
+        if (user === undefined) { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent a feed : message id ${messageSent.id}`);
+            });
+        }
     }
 
     @Command("ping")
@@ -300,9 +324,7 @@ export abstract class Fun {
             "eaten alive", "yeeted out of existence", "squashed", "smited", "dropped in the void"];
         const member = await command.guild.member(command.author);
         const author = member ? member.nickname : command.author.username;
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        const user = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const user = getMentioned(command);
 
         const random = Math.floor(Math.random() * options.length);
 
@@ -311,8 +333,12 @@ export abstract class Fun {
             .setTitle(`${author} was ${options[random]} by ${user}`)
             .setFooter("K-O!");
 
-        command.reply({ embed }).then((messageSent) => {
-            this.logger.info(`Sent kill : message id ${messageSent.id}`);
-        });
+        if (user == "error") { return; }
+        else {
+
+            command.reply(embed).then((messageSent) => {
+                this.logger.info(`Sent kill : message id ${messageSent.id}`);
+            });
+        }
     }
 }

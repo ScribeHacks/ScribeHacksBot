@@ -21,7 +21,7 @@ export abstract class Verify {
 
         const channel = command.channel as TextChannel;
 
-        channel.bulkDelete(99).then(() => { command.channel.send("Please type in `!verify " + HACKATHON.Name) });
+        channel.bulkDelete(99).then(() => { command.channel.send("Please type in !verify and the name of the Hackathon") });
 
         const member_role = command.member.roles.cache.find(role => role.name === "Attendee");
 
