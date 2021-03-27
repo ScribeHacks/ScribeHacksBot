@@ -23,7 +23,15 @@ function getMentioned(command: CommandMessage) {
     }
 }
 
-function sendEmbed(command: CommandMessage, author: string, user?: string, adjective?: string, footer?: string, url?: string) {
+function sendEmbed(command: CommandMessage, adjective?: string, footer?: string, url?: string, mentions?: boolean) {
+    const author = command.member.displayName;
+    let user;
+    if (mentions === false) {
+        user = '';
+    }
+    else {
+        user = getMentioned(command);
+    }
     const embed = new MessageEmbed()
         .setColor(COLOR.RANDOM)
         .setTitle(`${author} ${adjective} ${user}`)
@@ -45,94 +53,76 @@ export abstract class Fun {
     @Description("Sends a kiss to another user. Must @ another user.")
     @Guard(NotBot)
     async kiss(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "kisses", "You both look cute", await (await this.neko.sfw.kiss()).url);
+        sendEmbed(command, "kisses", "You both look cute", await (await this.neko.sfw.kiss()).url);
     }
 
     @Command("smug")
     @Description("Be smug")
     @Guard(NotBot)
     async smug(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        sendEmbed(command, author, null, "is smug", "You look smug", await (await this.neko.sfw.smug()).url);
+        sendEmbed(command, "is smug", "You look smug", await (await this.neko.sfw.smug()).url, false);
     }
 
     @Command("baka")
     @Description("You are a baka")
     @Guard(NotBot)
     async baka(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        sendEmbed(command, author, null, "is baka", "You look baka", await (await this.neko.sfw.baka()).url);
+        sendEmbed(command, "is baka", "You look baka", await (await this.neko.sfw.baka()).url, false);
     }
 
     @Command("pat")
     @Description("Pat another user. Must @ another user")
     @Guard(NotBot, Mention)
     async pat(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "patted", "You did a good pat", await (await this.neko.sfw.pat()).url);
+        sendEmbed(command, "patted", "You did a good pat", await (await this.neko.sfw.pat()).url);
     }
 
     @Command("hug")
     @Description("Hug another user. Must @ another user")
     @Guard(NotBot, Mention)
     async hug(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "hugged", "You gave a massive hug", await (await this.neko.sfw.hug()).url);
+        sendEmbed(command, "hugged", "You gave a massive hug", await (await this.neko.sfw.hug()).url);
     }
 
     @Command("slap")
     @Description("Slap another user. Must @ another user")
     @Guard(NotBot, Mention)
     async slap(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "slapped", "You slapped them hard", await (await this.neko.sfw.slap()).url);
+        sendEmbed(command, "slapped", "You slapped them hard", await (await this.neko.sfw.slap()).url);
     }
 
     @Command("tickle")
     @Description("Tickle another user. Must @ another user")
     @Guard(NotBot, Mention)
     async tickle(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "tickled", "You tickled them hard", await (await this.neko.sfw.tickle()).url);
+        sendEmbed(command, "tickled", "You tickled them hard", await (await this.neko.sfw.tickle()).url);
     }
 
     @Command("cuddle")
     @Description("Cuddle another user. Must @ another user")
     @Guard(NotBot, Mention)
     async cuddle(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "cuddled", "You cuddled them hard", await (await this.neko.sfw.cuddle()).url);
+        sendEmbed(command, "cuddled", "You cuddled them hard", await (await this.neko.sfw.cuddle()).url);
     }
     @Command("poke")
     @Description("Poke another user. Must @ another user")
     @Guard(NotBot, Mention)
     async poke(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "poked", "You poked them hard", await (await this.neko.sfw.poke()).url);
+        sendEmbed(command, "poked", "You poked them hard", await (await this.neko.sfw.poke()).url);
     }
 
     @Command("feed")
     @Description("Feed another user. Must @ another user")
     @Guard(NotBot, Mention)
     async feed(command: CommandMessage): Promise<void> {
-        const author = command.member.displayName;
-        const mentioned = getMentioned(command);
-        sendEmbed(command, author, mentioned, "fed", "You fed them good food", await (await this.neko.sfw.feed()).url);
+        sendEmbed(command, "fed", "You fed them good food", await (await this.neko.sfw.feed()).url);
     }
 
     @Command("ping")
     @Description("Get latency of the bot")
     @Guard(NotBot)
     async ping(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending feed");
+        this.logger.info("Sending ping");
         const time = Date.now() - command.createdTimestamp;
         command.reply("Pong time is " + time).then((messageSent) => {
             this.logger.info(`Sent Ping : message id ${messageSent.id}`);
