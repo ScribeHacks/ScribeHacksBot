@@ -172,7 +172,7 @@ export abstract class Fun {
 
         const embed = new MessageEmbed()
             .setColor(COLOR.RANDOM)
-            .setTitle(`${author} was ${options[random]} by ${user}`)
+            .setTitle(`${author} ${options[random]} ${user}`)
             .setFooter("K-O!");
 
         if (user == "error") { return; }
