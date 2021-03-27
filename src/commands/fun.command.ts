@@ -8,272 +8,124 @@ import { Mention } from "../guards/Mention.guard";
 
 function getMentioned(command: CommandMessage) {
     try {
-        const mentioned = command.mentions.users.first();
-        const guildMentioned = command.guild.member(mentioned);
-        return guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        const myMentioned = command.mentions.users.first();
+        const guildMentioned = command.guild.member(myMentioned);
+        const mentioned = guildMentioned ? guildMentioned.nickname : guildMentioned.user.username;
+        if (mentioned === null) {
+            return "error";
+        }
+        else {
+            return mentioned;
+        }
     } catch (error) {
         Logger.prototype.error("Undefined user");
         return "error";
     }
 }
-export abstract class Fun {
 
+function sendEmbed(command: CommandMessage, author: string, user?: string, adjective?: string, footer?: string, url?: string) {
+    const embed = new MessageEmbed()
+        .setColor(COLOR.RANDOM)
+        .setTitle(`${author} ${adjective} ${user}`)
+        .setImage(url)
+        .setFooter(`${footer}`);
+    if (user == "error") { return; }
+    else {
+        command.reply(embed).then((messageSent) => {
+            Logger.prototype.info(`Sent a ${adjective} : message id ${messageSent.id}`);
+        });
+    }
+}
+export abstract class Fun {
     logger = Logger.prototype.getInstance();
     neko = new NekoClient();
     api = "https://purrbot.site/api";
+
     @Command("kiss")
     @Description("Sends a kiss to another user. Must @ another user.")
     @Guard(NotBot)
     async kiss(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending kiss");
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const kisses = await (await this.neko.sfw.kiss()).url;
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} kisses ${user}`)
-            .setImage(kisses)
-            .setFooter("You both look cute");
-
-        if (user == "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent a kiss : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "kisses", "You both look cute", await (await this.neko.sfw.kiss()).url);
     }
 
     @Command("smug")
     @Description("Be smug")
     @Guard(NotBot)
     async smug(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending smug");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const smug = await (await this.neko.sfw.smug()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} is smug`)
-            .setImage(smug)
-            .setFooter("You look smug");
-
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent smug : message id ${messageSent.id}`);
-        });
+        const author = command.member.displayName;
+        sendEmbed(command, author, null, "is smug", "You look smug", await (await this.neko.sfw.smug()).url);
     }
 
     @Command("baka")
     @Description("You are a baka")
     @Guard(NotBot)
     async baka(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending baka");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const baka = await (await this.neko.sfw.baka()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} is baka`)
-            .setImage(baka)
-            .setFooter("You look baka");
-
-        command.reply(embed).then((messageSent) => {
-            this.logger.info(`Sent baka : message id ${messageSent.id}`);
-        });
+        const author = command.member.displayName;
+        sendEmbed(command, author, null, "is baka", "You look baka", await (await this.neko.sfw.baka()).url);
     }
 
     @Command("pat")
     @Description("Pat another user. Must @ another user")
     @Guard(NotBot, Mention)
     async pat(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending pat");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const pat = await (await this.neko.sfw.pat()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} patted ${user}`)
-            .setImage(pat)
-            .setFooter("You did a good pat!");
-
-        if (user == "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent pat : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "patted", "You did a good pat", await (await this.neko.sfw.pat()).url);
     }
 
     @Command("hug")
     @Description("Hug another user. Must @ another user")
     @Guard(NotBot, Mention)
     async hug(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending hug");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const hug = await (await this.neko.sfw.hug()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} hugged ${user}`)
-            .setImage(hug)
-            .setFooter("You gave a massive hug!");
-
-        if (user == "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent a hug : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "hugged", "You gave a massive hug", await (await this.neko.sfw.hug()).url);
     }
 
     @Command("slap")
     @Description("Slap another user. Must @ another user")
     @Guard(NotBot, Mention)
     async slap(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending slap");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const slap = await (await this.neko.sfw.slap()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} slapped ${user}`)
-            .setImage(slap)
-            .setFooter("You slapped them hard!");
-
-        if (user == "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent a slap : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "slapped", "You slapped them hard", await (await this.neko.sfw.slap()).url);
     }
 
     @Command("tickle")
     @Description("Tickle another user. Must @ another user")
     @Guard(NotBot, Mention)
     async tickle(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending slap");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const tickle = await (await this.neko.sfw.tickle()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} tickled ${user}`)
-            .setImage(tickle)
-            .setFooter("You tickled them hard!");
-
-        if (user == "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent a tickle : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "tickled", "You tickled them hard", await (await this.neko.sfw.tickle()).url);
     }
 
     @Command("cuddle")
     @Description("Cuddle another user. Must @ another user")
     @Guard(NotBot, Mention)
     async cuddle(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending cuddle");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const cuddle = await (await this.neko.sfw.cuddle()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} cuddled ${user}`)
-            .setImage(cuddle)
-            .setFooter("You cuddled them hard!");
-
-        if (user == "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent a cuddle : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "cuddled", "You cuddled them hard", await (await this.neko.sfw.cuddle()).url);
     }
     @Command("poke")
     @Description("Poke another user. Must @ another user")
     @Guard(NotBot, Mention)
     async poke(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending poke");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const poke = await (await this.neko.sfw.poke()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} poked ${user}`)
-            .setImage(poke)
-            .setFooter("You poked them hard!");
-
-        if (user == "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent a poke : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "poked", "You poked them hard", await (await this.neko.sfw.poke()).url);
     }
 
     @Command("feed")
     @Description("Feed another user. Must @ another user")
     @Guard(NotBot, Mention)
     async feed(command: CommandMessage): Promise<void> {
-        this.logger.info("Sending feed");
-
-        const member = await command.guild.member(command.author);
-        const author = member ? member.nickname : command.author.username;
-        const user = getMentioned(command);
-
-        const feed = await (await this.neko.sfw.feed()).url;
-
-        const embed = new MessageEmbed()
-            .setColor(COLOR.RANDOM)
-            .setTitle(`${author} fed ${user}`)
-            .setImage(feed)
-            .setFooter("You fed them good food!");
-
-        if (user === "error") { return; }
-        else {
-
-            command.reply(embed).then((messageSent) => {
-                this.logger.info(`Sent a feed : message id ${messageSent.id}`);
-            });
-        }
+        const author = command.member.displayName;
+        const mentioned = getMentioned(command);
+        sendEmbed(command, author, mentioned, "fed", "You fed them good food", await (await this.neko.sfw.feed()).url);
     }
 
     @Command("ping")

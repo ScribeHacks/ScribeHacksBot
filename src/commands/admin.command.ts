@@ -23,13 +23,6 @@ export abstract class Admins {
         const user = command.mentions.members.first();
         const role = command.guild.roles.cache.get(ID.ADMIN_ID);
 
-        if (!command.member.roles.cache.has(role.id)) {
-            user.ban();
-        }
-        else {
-            this.logger.error("unable to ban " + user.displayName);
-        }
-
         command.reply(user.displayName + " has been banned").then((messageSent) => {
             try {
                 user.send("You have been banned from " + HACKATHON.Name)
@@ -39,6 +32,13 @@ export abstract class Admins {
             }
             this.logger.info(`Sent Ban : message id ${messageSent.id}`);
         });
+
+        if (!command.member.roles.cache.has(role.id)) {
+            user.ban();
+        }
+        else {
+            this.logger.error("unable to ban " + user.displayName);
+        }
     }
 
     @Command("kick")
@@ -51,13 +51,6 @@ export abstract class Admins {
 
         const role = command.guild.roles.cache.get(ID.ADMIN_ID);
 
-        if (!command.member.roles.cache.has(role.id)) {
-            user.kick();
-        }
-        else {
-            this.logger.error("unable to kick " + user.displayName);
-        }
-
         command.reply(user.displayName + " has been kicked").then((messageSent) => {
             try {
                 user.send("You have been kicked from " + HACKATHON.Name)
@@ -67,6 +60,13 @@ export abstract class Admins {
             }
             this.logger.info(`Sent Kick : message id ${messageSent.id}`);
         });
+
+        if (!command.member.roles.cache.has(role.id)) {
+            user.kick();
+        }
+        else {
+            this.logger.error("unable to kick " + user.displayName);
+        }
     }
 
     @Command("clear :amount")
