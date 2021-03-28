@@ -5,11 +5,11 @@ RUN mkdir -p /usr/src/bot
 WORKDIR /usr/src/bot
 
 # Copy and Install our bot
-COPY package.json /usr/src/bot
+COPY package.json ./
 RUN yarn install
 
 # Our precious bot
 COPY . /usr/src/bot
 
 # Start me!
-CMD ["yarn run start"]
+RUN yarn run start
