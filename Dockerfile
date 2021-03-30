@@ -7,7 +7,6 @@ RUN mkdir -p /app \
 
 WORKDIR /app
 
-COPY yarn.lock /app
 COPY package.json /app
 
 RUN /usr/local/bin/yarn install
