@@ -28,7 +28,7 @@
     "start": "ts-node src/main.discord.ts",
     "lint": "eslint . --ext .ts --fix",
     "build": "tsc",
-    "prod": "node build/Main.discord.js"
+    "prod": "node build/main.discord.js"
   },
   "devDependencies": {
     "@types/node": "^14.14.31"

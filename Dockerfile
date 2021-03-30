@@ -8,15 +8,8 @@ COPY package.json /app
 
 COPY . /app
 
-RUN mkdir -p /app \
-    && apk add --no-cache yarn
-
-RUN npm install -g -s --no-progress yarn && \
-    yarn && \
-    yarn install && \
-    yarn run build && \
-    yarn run prod
+RUN apk add --no-cache yarn && yarn install && yarn run build
 
 ENV NODE_ENV=production
 
-CMD ["yarn", "start"]
+CMD ["yarn", "prod"]
