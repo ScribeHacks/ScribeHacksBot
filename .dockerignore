@@ -70,7 +70,6 @@ internal/
 !tests/cases/projects/NodeModulesSearch/**/*
 !tests/baselines/reference/project/nodeModules*/**/*
 .idea
-yarn.lock
 yarn-error.log
 .parallelperf.*
 tests/cases/user/*/package-lock.json
@@ -84,7 +83,6 @@ tests/cases/user/*/**/*.d.ts
 tests/baselines/reference/dt
 .failed-tests
 TEST-results.xml
-package-lock.json
 tests/cases/user/npm/npm
 tests/cases/user/TypeScript-React-Starter/TypeScript-React-Starter
 tests/cases/user/TypeScript-Node-Starter/TypeScript-Node-Starter
