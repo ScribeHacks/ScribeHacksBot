@@ -1,15 +1,20 @@
-FROM node:latest
+FROM node:14-alpine
 
-# Create the directory!
-RUN mkdir -p /usr/src/bot
-WORKDIR /usr/src/bot
+LABEL author="Kai Devrim" maintainer="kai@devrim.tech"
 
-# Copy and Install our bot
-COPY package.json ./
-RUN yarn install
+RUN mkdir -p /app \
+    && apk add --no-cache yarn
 
-# Our precious bot
-COPY . /usr/src/bot
+WORKDIR /app
 
-# Start me!
-RUN yarn run start
+COPY package-lock.json /app
+COPY package.json /app
+
+RUN /usr/local/bin/yarn install
+
+COPY . /app
+
+ENV NODE_ENV=production
+
+ENTRYPOINT ["/usr/local/bin/yarn"]
+CMD ["yarn", "start"]
