@@ -1,7 +1,4 @@
 import { Command, CommandMessage, Guard, Description } from "@typeit/discord";
-import { MessageEmbed } from "discord.js";
-import { COLOR } from "../enum/colors.enum";
-import { LINK } from "../enum/links.enum";
 import { NotBot } from "../guards/NotABot.guard";
 import { Events } from "../interfaces/schedule.interface";
 import { Logger } from "../services/logger.service";
