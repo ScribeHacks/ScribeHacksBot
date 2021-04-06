@@ -10,6 +10,7 @@
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
     "eslint": "^7.21.0",
+    "nekos.life": "^2.0.7",
     "nodemon": "^2.0.7",
     "rword": "^3.2.0",
     "ts-node": "^9.1.1",
@@ -28,7 +29,7 @@
     "start": "ts-node src/main.discord.ts",
     "lint": "eslint . --ext .ts --fix",
     "build": "tsc",
-    "prod": "node build/Main.discord.js"
+    "prod": "node build/main.discord.js"
   },
   "devDependencies": {
     "@types/node": "^14.14.31"
