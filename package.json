@@ -5,7 +5,7 @@
     "@typescript-eslint/eslint-plugin": "^4.21.0",
     "@typescript-eslint/parser": "^4.21.0",
     "airtable": "^0.10.1",
-    "airtable-plusplus": "^0.1.0",
+    "airtable-plusplus": "^0.3.2",
     "chalk": "^4.1.0",
     "discord.js": "^12.5.1",
     "dotenv": "^8.2.0",
