@@ -31,7 +31,8 @@
     "lint": "eslint . --ext .ts --fix",
     "build": "tsc",
     "prod": "node build/main.discord.js",
-    "prepare": "husky install"
+    "prepare": "husky install",
+    "setup": "yarn install && husky install && git update-index --assume-unchanged .env && yarn lint"
   },
   "devDependencies": {
     "@babel/core": "^7.13.14",

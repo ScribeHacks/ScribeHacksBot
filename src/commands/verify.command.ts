@@ -23,11 +23,16 @@ export abstract class Verify {
 
         channel.bulkDelete(99).then(() => { command.channel.send("Please type in !verify and the name of the Hackathon") });
 
-        const member_role = command.member.roles.cache.find(role => role.name === "Attendee");
+        const member_role = command.guild.roles.cache.find(role => role.name == 'Attendee' || role.id === ID.MEMBER_ID);
 
-        if (command.channel.id == ID.VERIFY_CHANNEL_ID && command.member.roles.cache.has(ID.MEMBER_ID) == false) {
+        if (command.channel.id == ID.VERIFY_CHANNEL_ID && command.member.roles.cache.has(ID.MEMBER_ID) === false) {
             if (verifyArgsString.toLowerCase === HACKATHON.Name.toLowerCase) {
-                command.member.roles.add(member_role);
+                try {
+                    command.member.roles.add(member_role);
+                } catch (error) {
+                    this.logger.error("Unable to add roles, probably missing permissions");
+                    this.logger.info("Full error is: " + error);
+                }
             }
             else {
                 command.author.send("Please type in: !verify and the name of the Hackathon");
