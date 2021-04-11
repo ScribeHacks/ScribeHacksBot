@@ -8,7 +8,7 @@ COPY package.json /app
 
 COPY . /app
 
-RUN apk add --no-cache yarn && yarn setup && yarn run build
+RUN apk add yarn && apk add git && yarn setup && yarn run build
 
 ENV NODE_ENV=production
 
